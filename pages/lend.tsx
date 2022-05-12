@@ -18,4 +18,4 @@ export const LendingPage = ({}: LendingPageProps) => {
   );
 };
 
-export default LendingPageProps;
+export default LendingPage;
