@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { USDC_ADDRESS } from '@src/constants/addresses';
 
 type Inputs = {
   daoName: string,
@@ -9,7 +10,7 @@ type Inputs = {
 }
 
 const paymentTokenOptions = [
-  { text: 'USDC', }
+  { text: 'USDC', address: USDC_ADDRESS }
 ];
 
 export default function Borrow () {
