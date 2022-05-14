@@ -6,7 +6,8 @@ import { useWalletAuth } from "../lib/walletContext";
 export interface LendingPageProps {}
 
 export const LendingPage = ({}: LendingPageProps) => {
-  const { connectWallet, checkIfWalletIsConnected } = useWalletAuth();
+  const { connectWallet, checkIfWalletIsConnected, currentAccount } =
+    useWalletAuth();
 
   useEffect(() => {
     checkIfWalletIsConnected();
@@ -15,7 +16,10 @@ export const LendingPage = ({}: LendingPageProps) => {
     <div>
       {/* Main Div ** Responsive Design Here*/}
       <div>
-        <ConnectWallet connectWallet={connectWallet} />
+        <ConnectWallet
+          connectWallet={connectWallet}
+          connected={currentAccount.length > 0}
+        />
       </div>
       <div>Lend</div>
       <div>DAO Table Details</div>
