@@ -16,9 +16,19 @@ const ConnectWalletButton = ({
   return (
     <div>
       {connected ? (
-        <Button variant="contained"> Wallet Connected</Button>
+        <Button
+          variant="contained"
+          className="bg-yellow-500 text-white rounded-xl"
+        >
+          {" "}
+          Wallet Connected
+        </Button>
       ) : (
-        <Button variant="contained" onClick={() => connectWallet()}>
+        <Button
+          variant="outlined"
+          className="text-yellow-500 border-yellow-500 hover:bg-yellow-500 hover:text-white	"
+          onClick={() => connectWallet()}
+        >
           {" "}
           Connect Wallet
         </Button>

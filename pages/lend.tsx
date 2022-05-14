@@ -16,10 +16,7 @@ export const LendingPage = ({}: LendingPageProps) => {
     <div>
       {/* Main Div ** Responsive Design Here*/}
       <div>
-        <ConnectWallet
-          connectWallet={connectWallet}
-          connected={currentAccount.length > 0}
-        />
+        <ConnectWallet connectWallet={connectWallet} connected={false} />
       </div>
       <div>Lend</div>
       <div>DAO Table Details</div>
