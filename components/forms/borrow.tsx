@@ -27,7 +27,7 @@ const defaultValues = {
   interestRate: 10,
 };
 
-export default function BorrowForm() {
+export const BorrowForm: React.FC<any> = () => {
   const { register, handleSubmit, watch } = useForm<Inputs>({ defaultValues });
   const watchAmount = watch("amount", 0);
   const watchPaymentToken = watch("paymentToken", "USDC");
