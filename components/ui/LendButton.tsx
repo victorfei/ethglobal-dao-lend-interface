@@ -14,7 +14,7 @@ const LendButton = ({ lend }: LendButtonProps) => {
     <div>
       <Button
         variant="outlined"
-        className="text-yellow-500 border-yellow-500 hover:bg-yellow-500 hover:text-white	 hover:cursor-pointer w-1/2"
+        className="text-yellow-500 border-yellow-500 hover:bg-yellow-500 hover:text-white hover:border-yellow-500	 hover:cursor-pointer w-1/2"
         onClick={() => lend()}
       >
         Lend

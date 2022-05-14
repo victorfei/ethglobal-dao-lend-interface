@@ -1,4 +1,5 @@
-import LendingTable from "@src/components/lendingTable";
+import LendingDetails from "../components/LendingDetails";
+import LendingTable from "../components/LendingTable";
 import { providers } from "ethers";
 import React, { useEffect, useState } from "react";
 import ConnectWallet from "../components/ui/ConnectWallet";
@@ -25,16 +26,19 @@ export const LendingPage = ({ lendingTableValues }: LendingPageProps) => {
         />
       </div>
       <div>
-        <LendingTable
-          daoName="Hello"
-          borrowAmount={1000000}
-          borrowToken="USDC"
-          borrowMaturity={1}
-          borrowInterestRate={123}
-        />
+        <div>
+          <LendingTable
+            daoName="MakerDAO"
+            borrowAmount={1000000}
+            borrowToken="USDC"
+            borrowMaturity={1}
+            borrowInterestRate={123}
+          />
+        </div>
+        <div className="py-2">
+          <LendingDetails />
+        </div>
       </div>
-      <div>DAO Table Details</div>
-      <div>Extra Details and Graph Info</div>
     </div>
   );
 };
