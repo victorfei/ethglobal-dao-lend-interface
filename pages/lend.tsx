@@ -1,11 +1,14 @@
+import LendingTable from "@src/components/lendingTable";
 import { providers } from "ethers";
 import React, { useEffect, useState } from "react";
 import ConnectWallet from "../components/ui/ConnectWallet";
 import { useWalletAuth } from "../lib/walletContext";
 
-export interface LendingPageProps {}
+export interface LendingPageProps {
+  lendingTableValues: {};
+}
 
-export const LendingPage = ({}: LendingPageProps) => {
+export const LendingPage = ({ lendingTableValues }: LendingPageProps) => {
   const { connectWallet, checkIfWalletIsConnected, currentAccount } =
     useWalletAuth();
 
@@ -21,7 +24,15 @@ export const LendingPage = ({}: LendingPageProps) => {
           connected={currentAccount.length > 0}
         />
       </div>
-      <div>Lend</div>
+      <div>
+        <LendingTable
+          daoName="Hello"
+          borrowAmount={1000000}
+          borrowToken="USDC"
+          borrowMaturity={1}
+          borrowInterestRate={123}
+        />
+      </div>
       <div>DAO Table Details</div>
       <div>Extra Details and Graph Info</div>
     </div>
