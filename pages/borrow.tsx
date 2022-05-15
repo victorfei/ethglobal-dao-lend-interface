@@ -1,4 +1,4 @@
-import BorrowForm from "@src/components/borrowForm";
+import { BorrowForm } from "@src/components/forms/BorrowForm";
 
 export default function Borrow() {
   return (
