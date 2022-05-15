@@ -5,26 +5,22 @@ import React, { useEffect, useState } from "react";
 import ConnectWallet from "../components/ui/ConnectWallet";
 import { useWalletAuth } from "../lib/walletContext";
 
-export interface LendingPageProps {
-  lendingTableValues: {};
-}
+export interface LendingPageProps {}
 
-export const LendingPage = ({ lendingTableValues }: LendingPageProps) => {
+export const LendingPage = ({}: LendingPageProps) => {
   const { connectWallet, checkIfWalletIsConnected, currentAccount } =
     useWalletAuth();
+
+  const [amountLend, setAmountLend] = useState(0);
 
   useEffect(() => {
     checkIfWalletIsConnected();
   }, []);
+
   return (
     <div>
       {/* Main Div ** Responsive Design Here*/}
-      <div>
-        <ConnectWallet
-          connectWallet={connectWallet}
-          connected={currentAccount.length > 0}
-        />
-      </div>
+
       <div>
         <div>
           <LendingTable
@@ -36,8 +32,23 @@ export const LendingPage = ({ lendingTableValues }: LendingPageProps) => {
           />
         </div>
         <div className="py-2">
-          <LendingDetails />
+          <LendingDetails
+            amountLend={amountLend}
+            setAmountLend={setAmountLend}
+            daoName={"Test Name"}
+            borrowToken={"USDC"}
+            maxBorrow={12312}
+            maturedValue={2342}
+            maturityDate={"Monday"}
+            lend={() => console.log("Lend Test")}
+          />
         </div>
+      </div>
+      <div>
+        <ConnectWallet
+          connectWallet={connectWallet}
+          connected={currentAccount.length > 0}
+        />
       </div>
     </div>
   );

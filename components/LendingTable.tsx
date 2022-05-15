@@ -6,7 +6,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import LendButton from "./ui/LendButton";
+import LendButton from "./ui/LendingButton";
+import { Button } from "@mui/material";
 
 export interface lendingTableProps {
   daoName: string;
@@ -58,7 +59,12 @@ export const LendingTable = ({
                 {borrowInterestRate ? borrowInterestRate : "undefined"}%
               </TableCell>
               <TableCell align="center">
-                <LendButton lend={() => console.log("Lending Details")} />
+                <Button
+                  variant="outlined"
+                  className="text-yellow-500 border-yellow-500 hover:bg-yellow-500 hover:text-white hover:border-yellow-500	 hover:cursor-pointer w-10/12"
+                >
+                  Details
+                </Button>
               </TableCell>
             </TableRow>
           </TableBody>
