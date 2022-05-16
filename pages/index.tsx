@@ -1,21 +1,22 @@
-import { Button } from "@mui/material";
-import type { NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
-import router from "next/router";
-import styles from "../styles/Home.module.css";
+import React, { useEffect, useState } from "react";
+import Router from "next/router";
 
 // update main
+const Home = () => {
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    const { pathname } = Router;
+    // conditional redirect
+    if (pathname == "/") {
+      Router.push("/lend");
+    } else {
+      setLoaded(true);
+    }
+  }, []);
 
-const Home: NextPage = () => {
-  return (
-    <div className={styles.container}>
-      <Button variant="contained" onClick={() => router.push("/lend")}>
-        {" "}
-        Go to Lend
-      </Button>
-    </div>
-  );
+  if (!loaded) {
+    return <div></div>; //show nothing or a loader
+  }
 };
 
 export default Home;

@@ -1,26 +1,11 @@
 import { useForm } from "react-hook-form";
 import { PAYMENT_TOKEN_ADDRESSES } from "@src/constants/addresses";
 import { convertDayToSeconds } from "@src/helpers";
-
-type Inputs = {
-  daoName: string;
-  amount: number;
-  paymentToken: string;
-  maturityDate: string;
-  interestRate: number;
-};
-
-const paymentTokenOptions = [
-  { label: "USDC", value: "USDC" },
-  { label: "FRAX", value: "FRAX" },
-  { label: "DAI", value: "DAI" },
-];
-
-const maturityDateOptions = [
-  { label: "1 Week", value: convertDayToSeconds(7) },
-  { label: "2 Weeks", value: convertDayToSeconds(14) },
-  { label: "4 Weeks", value: convertDayToSeconds(30) },
-];
+import {
+  BondDetails,
+  PaymentTokenOptions,
+  MaturityDateOptions,
+} from "./common";
 
 const defaultValues = {
   amount: 0,
@@ -28,7 +13,9 @@ const defaultValues = {
 };
 
 export const BorrowForm: React.FC<any> = () => {
-  const { register, handleSubmit, watch } = useForm<Inputs>({ defaultValues });
+  const { register, handleSubmit, watch } = useForm<BondDetails>({
+    defaultValues,
+  });
   const watchAmount = watch("amount", 0);
   const watchPaymentToken = watch("paymentToken", "USDC");
   const watchwatchInterestRate = watch("interestRate", 0);
@@ -69,7 +56,7 @@ export const BorrowForm: React.FC<any> = () => {
           className="form-select mx-2 rounded-md"
           {...register("paymentToken")}
         >
-          {paymentTokenOptions.map((option, idx) => (
+          {PaymentTokenOptions.map((option, idx) => (
             <option value={option.value} key={option.value + idx}>
               {option.label}
             </option>
@@ -87,7 +74,7 @@ export const BorrowForm: React.FC<any> = () => {
           className="form-select mx-2 rounded-md"
           {...register("maturityDate")}
         >
-          {maturityDateOptions.map((option, idx) => (
+          {MaturityDateOptions.map((option, idx) => (
             <option value={option.value} key={option.value + idx}>
               {option.label}
             </option>
@@ -109,11 +96,12 @@ export const BorrowForm: React.FC<any> = () => {
       </div>
       <div className="m-2">
         You are minting {watchAmount ? watchAmount : 0} bond tokens at an
-        interest rate of {watchwatchInterestRate ? watchwatchInterestRate : 0} % to be sold
-        for {watchPaymentToken}. Your bond tokens will be listed in Lend.
+        interest rate of {watchwatchInterestRate ? watchwatchInterestRate : 0} %
+        to be sold for {watchPaymentToken}. Your bond tokens will be listed in
+        Lend.
       </div>
 
       <input className="submitButton m-2" type="submit"></input>
     </form>
   );
-}
+};
