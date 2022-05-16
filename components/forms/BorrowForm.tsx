@@ -6,6 +6,7 @@ import {
   PaymentTokenOptions,
   MaturityDateOptions,
 } from "./common";
+import { createBond } from "@src/ethereum/bond";
 
 const defaultValues = {
   amount: 0,
@@ -20,8 +21,8 @@ export const BorrowForm: React.FC<any> = () => {
   const watchPaymentToken = watch("paymentToken", "USDC");
   const watchwatchInterestRate = watch("interestRate", 0);
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
+  const onSubmit = handleSubmit(async (bondDetails: BondDetails) => {
+    await createBond(bondDetails);
   });
 
   return (
