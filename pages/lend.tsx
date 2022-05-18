@@ -10,11 +10,6 @@ export const LendingPage = ({}: LendingPageProps) => {
       <div>
         <div>
           <LendingTable
-            daoName="MakerDAO"
-            borrowAmount={1000000}
-            borrowToken="USDC"
-            borrowMaturity={1}
-            borrowInterestRate={123}
           />
         </div>
         <div className="py-2">
