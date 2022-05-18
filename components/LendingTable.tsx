@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+import { LendForm } from "./forms/LendForm";
 
 export interface lendingTableProps {
   daoName: string;
@@ -24,7 +25,8 @@ const columnDefs: GridColDef[] = [
 ];
 
 export const LendingTable = () => {
-  const [allBonds, setAllBonds] = useState({});
+  const [allBonds, setAllBonds] = useState([]);
+  const [selectedBondId, setSelectedBondId] = useState(-1);
   useEffect(() => {
     const fetchData = async () => {
       client
@@ -72,7 +74,26 @@ export const LendingTable = () => {
         columns={columnDefs}
         hideFooter={true}
         autoHeight={true}
+        onRowClick={(params, events, details) => {
+          setSelectedBondId(Number(params["id"]));
+          console.log(selectedBondId);
+        }}
       />
+      <div>
+        {selectedBondId >= 0 && (
+          <LendForm
+            bondDetails={{
+              daoName: allBonds[selectedBondId]["dao"],
+              amount: 2000,
+              paymentToken: "USDC",
+              maturityDate:
+                allBonds[selectedBondId]["maturityDate"].toLocaleString(),
+              interestRate: 0.1,
+            }}
+            remainingBorrowAmount={10}
+          />
+        )}
+      </div>
     </div>
   );
 };
