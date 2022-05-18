@@ -1,13 +1,6 @@
-import * as React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import LendButton from "./ui/LendingButton";
-import { Button } from "@mui/material";
+import { useState, useEffect } from "react";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 
 export interface lendingTableProps {
   daoName: string;
@@ -17,59 +10,69 @@ export interface lendingTableProps {
   borrowInterestRate: number;
 }
 
-export const LendingTable = ({
-  daoName,
-  borrowAmount,
-  borrowToken,
-  borrowMaturity,
-  borrowInterestRate,
-}: lendingTableProps) => {
+const client = new ApolloClient({
+  uri: "https://api.thegraph.com/subgraphs/name/ltyu/ethglobal-dao-lend-subgraph-repo",
+  cache: new InMemoryCache(),
+});
+
+const columnDefs: GridColDef[] = [
+  { field: "id", headerName: "ID", flex: 1 },
+  { field: "name", headerName: "Bond Name", flex: 1 },
+  { field: "dao", headerName: "DAO Name", flex: 1 },
+  { field: "maturityDate", headerName: "Maturity Date", flex: 1 },
+  { field: "addr", headerName: "Address", flex: 1 },
+];
+
+export const LendingTable = () => {
+  const [allBonds, setAllBonds] = useState({});
+  useEffect(() => {
+    const fetchData = async () => {
+      client
+        .query({
+          query: gql`
+            {
+              bonds(first: 5) {
+                id
+                name
+                maturity
+                dao {
+                  name
+                }
+              }
+              daos(first: 5) {
+                id
+                name
+              }
+            }
+          `,
+        })
+        .then((result: any) => {
+          var outputs: any[] = [];
+          result["data"]["bonds"].forEach((bond: any, idx: number) => {
+            var maturityDate = new Date(0); // The 0 there is the key, which sets the date to the epoch
+            maturityDate.setUTCSeconds(bond["maturity"]);
+            outputs.push({
+              id: idx,
+              addr: bond["id"],
+              name: bond["name"],
+              maturityDate: maturityDate,
+              dao: bond["dao"]["name"],
+            });
+          });
+          setAllBonds(outputs);
+        });
+    };
+    fetchData();
+  }, []);
+
   return (
-    <div className="w-8/12">
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead className="bg-gray-200">
-            <TableRow>
-              <TableCell>DAO</TableCell>
-              <TableCell align="right">Borrow Amount</TableCell>
-              <TableCell align="right">Borrow Token</TableCell>
-              <TableCell align="center">Maturity</TableCell>
-              <TableCell align="center">Interest Rate</TableCell>
-              <TableCell align="right"></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <TableRow
-              key={daoName}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {daoName ? daoName : "undefined"}
-              </TableCell>
-              <TableCell align="center">
-                {borrowAmount ? borrowAmount.toLocaleString() : "undefined"}
-              </TableCell>
-              <TableCell align="center">
-                {borrowToken ? borrowToken : "undefined"}
-              </TableCell>
-              <TableCell align="center">
-                {borrowMaturity ? borrowMaturity : "undefined"} Year
-              </TableCell>
-              <TableCell align="center">
-                {borrowInterestRate ? borrowInterestRate : "undefined"}%
-              </TableCell>
-              <TableCell align="center">
-                <Button
-                  variant="outlined"
-                  className="text-yellow-500 border-yellow-500 hover:bg-yellow-500 hover:text-white hover:border-yellow-500	 hover:cursor-pointer w-10/12"
-                >
-                  Details
-                </Button>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
+    <div style={{ width: "100%" }}>
+      <DataGrid
+        rows={allBonds}
+        columns={columnDefs}
+        hideFooter={true}
+        autoHeight={true}
+      />
     </div>
   );
 };
