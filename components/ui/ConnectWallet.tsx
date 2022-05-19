@@ -1,5 +1,4 @@
 import { providers, ethers } from "ethers";
-import Web3Modal from "web3modal";
 import React, { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 
