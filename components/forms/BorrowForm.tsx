@@ -31,7 +31,7 @@ export const BorrowForm: React.FC<formProps> = ({
 
   const onSubmit = handleSubmit(async (data) => {
     setFormDetails(data);
-    await createBond;
+    await createBond();
   });
 
   return (
