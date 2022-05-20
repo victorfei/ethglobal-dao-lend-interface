@@ -1,11 +1,26 @@
 import { BorrowForm } from "@src/components/forms/BorrowForm";
-import * as React from "react";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import {LendingPage} from "./lend";
+import { LendingTable } from "../components/LendingTable";
+import React, { useEffect, useState } from "react";
+import ConnectWallet from "../components/ui/ConnectWallet";
+import { useWalletAuth } from "../lib/walletContext";
 
 export default function AllInOne() {
-  const [mode, setMode] = React.useState<string | null>("lend");
+  // ---------------------------
+  // Wallet related
+  // ---------------------------
+  const { connectWallet, checkIfWalletIsConnected, currentAccount } =
+    useWalletAuth();
+
+  useEffect(() => {
+    checkIfWalletIsConnected();
+  }, []);
+
+  // ---------------------------
+  // For toggel button groups
+  // ---------------------------
+  const [mode, setMode] = useState<string | null>("lend");
 
   const handleModeChange = (
     event: React.MouseEvent<HTMLElement>,
@@ -24,7 +39,14 @@ export default function AllInOne() {
 
       <div>
         {mode == "borrow" && <BorrowForm></BorrowForm>}
-        {mode == "lend" && <LendingPage></LendingPage>}
+        {mode == "lend" && <LendingTable></LendingTable>}
+      </div>
+
+      <div>
+        <ConnectWallet
+          connectWallet={connectWallet}
+          connected={currentAccount.length > 0}
+        />
       </div>
     </div>
   );
