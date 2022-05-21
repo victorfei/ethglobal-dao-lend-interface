@@ -1,7 +1,8 @@
-export const RPC_ADDRESS = '';
-export const BOND_FACTORY_ADDRESS = '';
+export const RPC_ADDRESS = "";
+export const BOND_FACTORY_ADDRESS = "0xFD7371eB3D3Cf9DB0583f928D9a1ef6befEDf17C";
+export const COLLATERAL_TOKEN_ADDRESS = "0xbd194dE5Fae9bD5B9fD5C64eF563eb52D3712428";
 export const PAYMENT_TOKEN_ADDRESSES = {
-    DAI: '0x123',
-    FRAX: '0x321',
-    USDC: '0x555',
+    DAI: "0x123",
+    FRAX: "0x321",
+    USDC: "0xf407175Aa7F2e0c3100805A12b477bc7a65396e2",
 };

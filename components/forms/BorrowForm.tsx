@@ -5,6 +5,7 @@ import {
   BondDetails,
   PaymentTokenOptions,
   MaturityDateOptions,
+  PaymentToken,
 } from "./common";
 
 const defaultValues = {
@@ -13,26 +14,20 @@ const defaultValues = {
 };
 
 interface formProps {
-  formDetails: any;
-  setFormDetails: (formDetails: any) => void;
-  createBond: () => void;
+  createBond: (bondDetails: BondDetails) => void;
 }
 
 export const BorrowForm: React.FC<formProps> = ({
-  setFormDetails,
   createBond,
 }) => {
   const { register, handleSubmit, watch } = useForm<BondDetails>({
     defaultValues,
   });
   const watchAmount = watch("amount", 0);
-  const watchPaymentToken = watch("paymentToken", "USDC");
+  const watchPaymentToken = watch("paymentToken", PaymentToken.USDC);
   const watchInterestRate = watch("interestRate", 0);
 
-  const onSubmit = handleSubmit(async (data) => {
-    setFormDetails(data);
-    await createBond();
-  });
+  const onSubmit = handleSubmit(createBond);
 
   return (
     <form className="m-10 max-w-xl" onSubmit={onSubmit}>

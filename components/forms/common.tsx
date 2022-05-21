@@ -1,10 +1,16 @@
 import { convertDayToSeconds } from "@src/helpers";
 
+export enum PaymentToken {
+  USDC = 'USDC',
+  FRAX = 'FRAX',
+  DAI = 'DAI'
+}
+
 type BondDetails = {
   daoName: string;
   symbol: string;
   amount: number;
-  paymentToken: string;
+  paymentToken: PaymentToken;
   maturityDate: string;
   interestRate: number;
 };
