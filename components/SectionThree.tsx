@@ -11,7 +11,7 @@ export interface SectionThreeProps {}
 
 export const SectionThree = () => {
   return (
-    <div className=" flex-nowrap text-center justify-center   bg-gray-50 rounded-xl">
+    <div className=" flex-nowrap text-center justify-center  shadow-xl bg-gray-50 rounded-xl">
       <div className="py-8">Our Top Performing DAO's</div>
       <LendingTable />
     </div>

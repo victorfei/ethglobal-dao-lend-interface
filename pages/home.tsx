@@ -9,6 +9,7 @@ import { NavBar } from "../components/navbar/NavBar";
 import SectionOne from "@src/components/SectionOne";
 import SectionTwo from "@src/components/SectionTwo";
 import SectionThree from "@src/components/SectionThree";
+import Footer from "@src/components/footer/Footer";
 
 export default function Home() {
   return (
@@ -19,6 +20,7 @@ export default function Home() {
           <SectionOne />
           <SectionTwo />
           <SectionThree />
+          <Footer />
         </div>
       </Container>
     </div>
