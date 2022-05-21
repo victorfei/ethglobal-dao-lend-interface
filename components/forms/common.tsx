@@ -2,6 +2,7 @@ import { convertDayToSeconds } from "@src/helpers";
 
 type BondDetails = {
   daoName: string;
+  symbol: string;
   amount: number;
   paymentToken: string;
   maturityDate: string;
