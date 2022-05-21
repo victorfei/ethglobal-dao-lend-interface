@@ -23,9 +23,7 @@ export default function Borrow() {
   }, []);
 
   const contractAddress = "0xE75f21020d4665542D57A8EbFD848F56CcCCE3A6";
-  /**
-   * Create a variable here that references the abi content!
-   */
+
   const contractABI = abis.bondFactory;
   const erc20Abi = abis.erc20;
   const createBond = async () => {
@@ -47,16 +45,7 @@ export default function Borrow() {
           signer
         );
 
-        //  string memory name,
-        // string memory symbol,
-        // uint256 maturity,
-        // address paymentToken,
-        // address collateralToken,
-        // uint256 collateralTokenAmount,
-        // uint256 convertibleTokenAmount,
-        // uint256 bonds
-
-        const allowanceERC20 = await erc20.approve(
+        const allowanceERC20Txn = await erc20.approve(
           "0xE75f21020d4665542D57A8EbFD848F56CcCCE3A6",
           1000
         );
@@ -78,11 +67,15 @@ export default function Borrow() {
         );
 
         console.log("Mining...", createBondTxn.hash);
-        console.log("Mining...erc", allowanceERC20.hash);
-        await allowanceERC20.wait();
+        console.log("Mining...erc", allowanceERC20Txn.hash);
+        await allowanceERC20Txn.wait();
         await createBondTxn.wait();
 
-        console.log("Mined -- Success ", createBondTxn.hash);
+        console.log(
+          "Mined -- Success ",
+          createBondTxn.hash + "Mined -- Success ERC20",
+          allowanceERC20Txn.hash
+        );
       } else {
         console.log("Ethereum object doesn't exist!");
       }

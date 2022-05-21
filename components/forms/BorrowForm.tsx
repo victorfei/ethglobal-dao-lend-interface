@@ -27,7 +27,7 @@ export const BorrowForm: React.FC<formProps> = ({
   });
   const watchAmount = watch("amount", 0);
   const watchPaymentToken = watch("paymentToken", "USDC");
-  const watchwatchInterestRate = watch("interestRate", 0);
+  const watchInterestRate = watch("interestRate", 0);
 
   const onSubmit = handleSubmit(async (data) => {
     setFormDetails(data);
@@ -46,6 +46,17 @@ export const BorrowForm: React.FC<formProps> = ({
           id="text"
           className="form-input mx-2 rounded-md"
           {...register("daoName", { required: true })}
+        ></input>
+      </div>
+      <div className="grid grid-cols-3 p-2">
+        <label>
+          <span className="text-gray-700">Token Symbol</span>
+        </label>
+        <input
+          type="text"
+          id="text"
+          className="form-input mx-2 rounded-md"
+          {...register("symbol", { required: true })}
         ></input>
       </div>
 
@@ -106,9 +117,8 @@ export const BorrowForm: React.FC<formProps> = ({
       </div>
       <div className="m-2">
         You are minting {watchAmount ? watchAmount : 0} bond tokens at an
-        interest rate of {watchwatchInterestRate ? watchwatchInterestRate : 0} %
-        to be sold for {watchPaymentToken}. Your bond tokens will be listed in
-        Lend.
+        interest rate of {watchInterestRate ? watchInterestRate : 0} % to be
+        sold for {watchPaymentToken}. Your bond tokens will be listed in Lend.
       </div>
 
       <input className="submitButton m-2" type="submit"></input>
