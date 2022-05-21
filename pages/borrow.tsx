@@ -16,6 +16,7 @@ export default function Borrow() {
     daoName: "default",
     paymentToken: "Default",
     maturityDate: "420",
+    symbol: "lit",
   });
 
   useEffect(() => {
@@ -49,17 +50,27 @@ export default function Borrow() {
           "0xE75f21020d4665542D57A8EbFD848F56CcCCE3A6",
           1000
         );
+        // string memory name,
+        //       string memory symbol,
+        //       uint256 maturity, (NEEDS TO BE IN BLOCK TIMESTAMP)
+        //       address paymentToken, NEEDS TO POINT TO TOKEN ADDRESS
+        //       address collateralToken, TO BE REMOVED
+        //       uint256 collateralTokenAmount, TO BE REMOVED
+        //       uint256 convertibleTokenAmount,
+        //       uint256 bonds,
+        //       string memory daoName
+        //TO ACCEPT INTEREST RATE
 
         const createBondTxn = await BondFactoryContract.createBond(
-          "FET",
-          "FET",
-          1653924116,
-          "0x075a36ba8846c6b6f53644fdd3bf17e5151789dc",
+          formDetails.symbol,
+          formDetails.symbol,
+          formDetails.maturityDate,
+          formDetails.paymentToken,
           "0xff795577d9ac8bd7d90ee22b6c1703490b6512fd",
           9,
           8,
           100,
-          "daoTFE",
+          formDetails.daoName,
           {
             gasPrice: ethers.utils.parseUnits("100", "gwei"),
             gasLimit: 500000,

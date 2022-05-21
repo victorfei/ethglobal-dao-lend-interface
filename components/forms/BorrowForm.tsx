@@ -121,7 +121,7 @@ export const BorrowForm: React.FC<formProps> = ({
         sold for {watchPaymentToken}. Your bond tokens will be listed in Lend.
       </div>
 
-      <input className="submitButton m-2" type="submit"></input>
+      <input className=" p-2 rounded-xl m-2 bg-blue-400" type="submit"></input>
     </form>
   );
 };
