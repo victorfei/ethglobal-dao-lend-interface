@@ -40,6 +40,8 @@ export const BorrowForm: React.FC = () => {
       const { ethereum } = window;
 
       if (ethereum) {
+        // Bonds have a decimal place of 6 so we need to covert. TODO Maybe fetch the decimal place in the future
+        const convertedBondAmount = `${bondDetails.amount * 1000000}`; 
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
 
@@ -78,7 +80,7 @@ export const BorrowForm: React.FC = () => {
           COLLATERAL_TOKEN_ADDRESS, 
           1000000000000,
           0,
-          bondDetails.amount,
+          convertedBondAmount,
           bondDetails.daoName,
           {
             // TODO add gas price calulator to get dynamic prices
