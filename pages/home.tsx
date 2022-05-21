@@ -8,6 +8,7 @@ import { Card, Typography, CardActions, Container } from "@mui/material";
 import { NavBar } from "../components/navbar/NavBar";
 import SectionOne from "@src/components/SectionOne";
 import SectionTwo from "@src/components/SectionTwo";
+import SectionThree from "@src/components/SectionThree";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
           <NavBar />
           <SectionOne />
           <SectionTwo />
+          <SectionThree />
         </div>
       </Container>
     </div>

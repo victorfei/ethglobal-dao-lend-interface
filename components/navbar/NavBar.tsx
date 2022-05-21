@@ -1,4 +1,3 @@
-import Image from "next/image";
 import logoPng from "../../public/Logo_BONDFI.jpg";
 import Container from "@mui/material/Container";
 import ConnectWallet from "../ui/ConnectWallet";
@@ -18,8 +17,8 @@ export const NavBar = () => {
 
   return (
     <Container maxWidth="xl" className=" flex justify-between content-center ">
-      <Image src={logoPng} alt="logo" width="300" height="40" />
-      <div className="flex py-12">
+      <img src="./Logo_BONDFI.jpg" alt="logo" width="180" height="80" />
+      <div className="flex py-6">
         <ConnectWallet
           connectWallet={connectWallet}
           connected={currentAccount.length > 0}
