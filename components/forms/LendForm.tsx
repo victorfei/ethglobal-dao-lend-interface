@@ -33,8 +33,9 @@ export const LendForm = ({
   const submitLend = async (lendDetails: LendingDetails) => {
     try {
       const { ethereum } = window;
-      console.log(amountLend)
       if (ethereum) {
+        // Bonds have a decimal place of 6 so we need to covert. TODO Maybe fetch the decimal place in the future
+        const convertedAmountLend = `${amountLend * 1000000}`; 
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
 
@@ -51,10 +52,10 @@ export const LendForm = ({
         );
         
         // TODO add check to see if allowance is already done
-        const allowanceERC20Txn = await paymentTokenContract.approve(lendDetails.address, lendDetails.amount);
+        const allowanceERC20Txn = await paymentTokenContract.approve(lendDetails.address, convertedAmountLend);
         
         const createBondTxn = await bondContract.purchaseBond(
-          amountLend,
+          convertedAmountLend,
           {
             // TODO add gas price calulator to get dynamic prices
             gasPrice: ethers.utils.parseUnits("100", "gwei"),
