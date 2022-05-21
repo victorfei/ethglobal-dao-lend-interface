@@ -8,7 +8,7 @@ const Home = () => {
     const { pathname } = Router;
     // conditional redirect
     if (pathname == "/") {
-      Router.push("/all");
+      Router.push("/home");
     } else {
       setLoaded(true);
     }
