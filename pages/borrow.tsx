@@ -46,10 +46,7 @@ export default function Borrow() {
           signer
         );
 
-        const allowanceERC20Txn = await erc20.approve(
-          "0xE75f21020d4665542D57A8EbFD848F56CcCCE3A6",
-          1000
-        );
+        const allowanceERC20Txn = await erc20.approve(contractAddress, 1000);
         // string memory name,
         //       string memory symbol,
         //       uint256 maturity, (NEEDS TO BE IN BLOCK TIMESTAMP)
