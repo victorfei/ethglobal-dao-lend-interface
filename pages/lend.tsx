@@ -3,19 +3,9 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { LendingTable } from "../components/LendingTable";
 import React, { useEffect, useState } from "react";
-import ConnectWallet from "../components/ui/ConnectWallet";
 import { useWalletAuth } from "../lib/walletContext";
 
 export default function AllInOne() {
-  // ---------------------------
-  // Wallet related
-  // ---------------------------
-  const { connectWallet, checkIfWalletIsConnected, currentAccount } =
-    useWalletAuth();
-
-  useEffect(() => {
-    checkIfWalletIsConnected();
-  }, []);
 
   // ---------------------------
   // For toggel button groups
@@ -40,13 +30,6 @@ export default function AllInOne() {
       <div>
         {mode == "borrow" && <BorrowForm></BorrowForm>}
         {mode == "lend" && <LendingTable></LendingTable>}
-      </div>
-
-      <div>
-        <ConnectWallet
-          connectWallet={connectWallet}
-          connected={currentAccount.length > 0}
-        />
       </div>
     </div>
   );
