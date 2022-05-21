@@ -17,13 +17,14 @@ export const NavBar = () => {
   }, []);
 
   return (
-      <Container maxWidth="xl">
-          <Image src={logoPng} alt="logo" />
-
-          <ConnectWallet
-            connectWallet={connectWallet}
-            connected={currentAccount.length > 0}
-          />
-      </Container>
+    <Container maxWidth="xl" className=" flex justify-between content-center ">
+      <Image src={logoPng} alt="logo" width="160  " height="60" />
+      <div className="flex py-2">
+        <ConnectWallet
+          connectWallet={connectWallet}
+          connected={currentAccount.length > 0}
+        />{" "}
+      </div>
+    </Container>
   );
 };
