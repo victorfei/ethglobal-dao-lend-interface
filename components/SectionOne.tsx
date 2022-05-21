@@ -35,7 +35,7 @@ export const SectionOne = () => {
         </Button>
       </Container>
       <div
-        className="underline text-white text-right py-4 px-8 text-md"
+        className="underline text-white text-right py-4 px-8 text-md hover:cursor-pointer"
         onClick={() => {
           Router.push("/borrow");
         }}
