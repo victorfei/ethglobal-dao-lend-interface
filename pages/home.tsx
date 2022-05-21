@@ -7,23 +7,7 @@ import CardContent from "@mui/material/CardContent";
 import { Card, Typography, CardActions, Container } from "@mui/material";
 import { NavBar } from "../components/navbar/NavBar";
 import SectionOne from "@src/components/SectionOne";
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      // Mint green
-      main: "#98ff98",
-    },
-    secondary: {
-      // Orange
-      main: "#FBCEB1",
-    },
-    common: {
-      // Purple
-      font: "#552586",
-    },
-  },
-});
+import SectionTwo from "@src/components/SectionTwo";
 
 export default function Home() {
   return (
@@ -32,6 +16,7 @@ export default function Home() {
         <div>
           <NavBar />
           <SectionOne />
+          <SectionTwo />
         </div>
       </Container>
     </div>
