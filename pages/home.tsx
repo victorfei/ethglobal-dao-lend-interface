@@ -6,6 +6,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CardContent from "@mui/material/CardContent";
 import { Card, Typography, CardActions, Container } from "@mui/material";
 import { NavBar } from "../components/navbar/NavBar";
+import SectionOne from "@src/components/SectionOne";
 
 const theme = createTheme({
   palette: {
@@ -27,42 +28,12 @@ const theme = createTheme({
 export default function Home() {
   return (
     <div>
-      <Container>
-        <NavBar></NavBar>
+      <Container className="">
+        <div>
+          <NavBar />
+          <SectionOne />
+        </div>
       </Container>
-      <ThemeProvider theme={theme}>
-        <Container>
-          <CardContent>
-            <Typography variant="h2" color="common.font">
-              UnderCollateralized
-            </Typography>
-            <Typography variant="h3">Lending For</Typography>
-            <Typography variant="h3">DAO's</Typography>
-          </CardContent>
-        </Container>
-
-        <Container>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              Router.push("/lend");
-            }}
-          >
-            Invest in a DAO
-          </Button>
-
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => {
-              Router.push("/borrow");
-            }}
-          >
-            I'm a DAO
-          </Button>
-        </Container>
-      </ThemeProvider>
     </div>
   );
 }

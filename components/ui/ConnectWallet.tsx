@@ -18,7 +18,7 @@ const ConnectWalletButton = ({
       {connected ? (
         <Button
           variant="contained"
-          className="bg-yellow-500 text-white rounded-xl hover:bg-yellow-500 hover:text-white"
+          className="bg-black text-white rounded-xl hover:bg-black hover:text-white"
         >
           {" "}
           Wallet Connected
@@ -26,7 +26,7 @@ const ConnectWalletButton = ({
       ) : (
         <Button
           variant="outlined"
-          className="text-yellow-500 border-yellow-500 hover:bg-yellow-500 hover:text-white	 hover:cursor-pointer"
+          className="text-black border-black hover:bg-black hover:text-white	 hover:cursor-pointer"
           onClick={() => connectWallet()}
         >
           {" "}

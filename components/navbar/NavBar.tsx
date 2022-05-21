@@ -18,7 +18,7 @@ export const NavBar = () => {
 
   return (
     <Container maxWidth="xl" className=" flex justify-between content-center ">
-      <Image src={logoPng} alt="logo" width="160  " height="60" />
+      <Image src={logoPng} alt="logo" width="180  " height="60" />
       <div className="flex py-2">
         <ConnectWallet
           connectWallet={connectWallet}
