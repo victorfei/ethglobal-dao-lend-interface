@@ -22,7 +22,10 @@ export const SectionTwo = () => {
           </CardContent>
         </Container>
       </div>
-      <img src="./arrow-down.png" className="w-12 animate-bounce" />
+      <img
+        src="./arrow-down.png"
+        className="w-12 animate-bounce hover:cursor-pointer"
+      />
     </div>
   );
 };
