@@ -1,14 +1,21 @@
-import { BondDetails } from "./common";
+import { PaymentToken } from "./common";
 import { Button } from "@mui/material";
 import { useState } from "react";
+import { ethers } from "ethers";
+import { PAYMENT_TOKEN_ADDRESSES } from "@src/constants/addresses";
+import abis from "@src/abis";
 
-export interface LendingFormProps {
-  bondDetails: BondDetails;
-  remainingBorrowAmount: number;
+interface LendingDetails {
+  daoName: string,
+  amount: number,
+  paymentToken: PaymentToken,
+  maturityDate: string,
+  interestRate: number,
+  address: string,
+  remainingBorrowAmount: number
 }
-
-function submitLend(amountLend: number) {
-  console.log(amountLend);
+export interface LendingFormProps {
+  lendDetails: LendingDetails;
 }
 
 function calculateMaturedValue(amountLend: number) {
@@ -16,23 +23,74 @@ function calculateMaturedValue(amountLend: number) {
 }
 
 export const LendForm = ({
-  remainingBorrowAmount,
-  bondDetails,
+  lendDetails,
 }: LendingFormProps) => {
   const [amountLend, setAmountLend] = useState(0);
+
+  const bondAbi = abis.bond;
+  const erc20Abi = abis.erc20;
+
+  const submitLend = async (lendDetails: LendingDetails) => {
+    try {
+      const { ethereum } = window;
+      console.log(amountLend)
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+
+        const paymentTokenAddress = PAYMENT_TOKEN_ADDRESSES.USDC;
+        const paymentTokenContract = new ethers.Contract(
+          paymentTokenAddress,
+          erc20Abi,
+          signer
+        );
+        const bondContract = new ethers.Contract(
+          lendDetails.address,
+          bondAbi,
+          signer
+        );
+        
+        // TODO add check to see if allowance is already done
+        const allowanceERC20Txn = await paymentTokenContract.approve(lendDetails.address, lendDetails.amount);
+        
+        const createBondTxn = await bondContract.purchaseBond(
+          amountLend,
+          {
+            // TODO add gas price calulator to get dynamic prices
+            gasPrice: ethers.utils.parseUnits("100", "gwei"),
+            gasLimit: 500000,
+          }
+        );
+        console.log("Mining...", createBondTxn.hash);
+        console.log("Mining...erc", allowanceERC20Txn.hash);
+        await allowanceERC20Txn.wait();
+        await createBondTxn.wait();
+
+        console.log(
+          "Mined -- Success ",
+          createBondTxn.hash + "Mined -- Success ERC20",
+          allowanceERC20Txn.hash
+        );
+      } else {
+        console.log("Ethereum object doesn't exist!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <div className="w-8/12 border-gray-400 border-2 py-4 pl-4  border-solid shadow-lg ">
       {" "}
-      <div className="text-lg py-8">Lend to {bondDetails.daoName}</div>{" "}
+      <div className="text-lg py-8">Lend to {lendDetails.daoName}</div>{" "}
       <div className="flex justify-center pr-36">
         <div className="pr-2">Max Borrow</div>
         <input
           className=""
-          value={remainingBorrowAmount}
+          value={lendDetails.remainingBorrowAmount}
           readOnly={true}
         ></input>
-        {bondDetails.paymentToken}
+        {lendDetails.paymentToken}
       </div>
       <div className="flex justify-center pr-36">
         <div className="pr-10">Amount</div>
@@ -40,18 +98,18 @@ export const LendForm = ({
           value={amountLend}
           onChange={(e) => setAmountLend(parseInt(e.target.value) || 0)}
         ></input>
-        {bondDetails.paymentToken}
+        {lendDetails.paymentToken}
       </div>
       <div className="py-4">
-        Upon maturity on {bondDetails.maturityDate}, you can redeem up to{" "}
+        Upon maturity on {lendDetails.maturityDate}, you can redeem up to{" "}
         {calculateMaturedValue(amountLend)} bond tokens issued by{" "}
-        {bondDetails.daoName}.
+        {lendDetails.daoName}.
       </div>
       <div className="flex justify-center pr-20">
         <Button
           variant="outlined"
           className="text-yellow-500 border-yellow-500 hover:bg-yellow-500 hover:text-white hover:border-yellow-500	 hover:cursor-pointer w-36"
-          onClick={() => submitLend(amountLend)}
+          onClick={() => submitLend(lendDetails)}
         >
           Lend
         </Button>{" "}
