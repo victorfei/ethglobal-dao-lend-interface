@@ -19,7 +19,7 @@ export const SectionOne = () => {
             Undercollateralized
           </Typography>
           <Typography variant="h3">Lending For</Typography>
-          <Typography variant="h3">DAO's</Typography>
+          <Typography variant="h3">DAO&apos;s</Typography>
         </CardContent>
       </Container>
 
@@ -40,7 +40,7 @@ export const SectionOne = () => {
           Router.push("/borrow");
         }}
       >
-        I'm a DAO...
+        I&apos;m a DAO...
       </div>
     </div>
   );
