@@ -7,7 +7,13 @@ import { Card, Typography, CardActions, Container } from "@mui/material";
 
 export interface SectionOneProps {}
 
+
 export const SectionOne = () => {
+  const goToLendTable = (e: React.MouseEvent<HTMLElement>) => {
+      e.preventDefault(); 
+      window.location.replace("/home/#lend-table")
+  };
+
   return (
     <div
       style={{ width: `100%` }}
@@ -27,9 +33,7 @@ export const SectionOne = () => {
         <Button
           variant="contained"
           className="rounded-full bg-white text-black hover:bg-black hover:cursor-pointer hover:text-white"
-          onClick={() => {
-            console.log("move page ref");
-          }}
+          onClick={goToLendTable}
         >
           Invest in a DAO
         </Button>

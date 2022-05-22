@@ -114,7 +114,7 @@ export const LendingTable = () => {
     setModalOpen(false);
   };
   return (
-    <div style={{ width: "100%" }}>
+    <div id="lend-table" style={{ width: "100%" }}>
       <DataGrid
         rows={allBonds}
         columns={columnDefs}
