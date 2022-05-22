@@ -82,7 +82,7 @@ export const LendForm = ({ lendDetails }: LendingFormProps) => {
   };
 
   return (
-    <div className="w-8/12 border-gray-400 border-2 py-4 pl-4  border-solid shadow-lg ">
+    <div className="w-8/12 border-gray-400 border-2 py-4 pl-4  ">
       {" "}
       <div className="text-lg py-8">Lend to {lendDetails.daoName}</div>{" "}
       <div className="flex justify-center pr-36">
@@ -109,8 +109,8 @@ export const LendForm = ({ lendDetails }: LendingFormProps) => {
       </div>
       <div className="flex justify-center pr-20">
         <Button
-          variant="outlined"
-          className="text-yellow-500 border-yellow-500 hover:bg-yellow-500 hover:text-white hover:border-yellow-500	 hover:cursor-pointer w-36"
+          variant="contained"
+          className="text-white bg-black border-black hover:bg-yellow-500 hover:text-white hover:border-yellow-500	 hover:cursor-pointer w-36"
           onClick={() => submitLend(lendDetails)}
         >
           Lend

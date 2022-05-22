@@ -110,6 +110,9 @@ export const LendingTable = () => {
     fetchData();
   }, []);
 
+  const handleClose = () => {
+    setModalOpen(false);
+  };
   return (
     <div style={{ width: "100%" }}>
       <DataGrid
@@ -124,7 +127,7 @@ export const LendingTable = () => {
       {cellValues && (
         <LendingModal
           open={modalOpen}
-          handleClose={setModalOpen}
+          handleClose={handleClose}
           addr={cellValues.addr}
           name={cellValues.name}
           maturityDate={cellValues.maturityDate}
