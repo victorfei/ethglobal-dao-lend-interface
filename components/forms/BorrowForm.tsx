@@ -1,6 +1,10 @@
 import { useForm } from "react-hook-form";
 import { Web3Provider } from "@ethersproject/providers";
-import { BOND_FACTORY_ADDRESS, COLLATERAL_TOKEN_ADDRESS, PAYMENT_TOKEN_ADDRESSES } from "@src/constants/addresses";
+import {
+  BOND_FACTORY_ADDRESS,
+  COLLATERAL_TOKEN_ADDRESS,
+  PAYMENT_TOKEN_ADDRESSES,
+} from "@src/constants/addresses";
 import {
   BondDetails,
   PaymentTokenOptions,
@@ -15,11 +19,17 @@ const defaultValues = {
   interestRate: 10,
 };
 
-const generateBondName = (bondDetails: BondDetails, maturityDate: number): string => {
-  return `Bond ${bondDetails.daoName} ${maturityDate} ${bondDetails.paymentToken}`
+const generateBondName = (
+  bondDetails: BondDetails,
+  maturityDate: number
+): string => {
+  return `Bond ${bondDetails.daoName} ${maturityDate} ${bondDetails.paymentToken}`;
 };
 
-const generateMaturityDate = async (provider: Web3Provider, bondDetails: BondDetails): Promise<number> => {
+const generateMaturityDate = async (
+  provider: Web3Provider,
+  bondDetails: BondDetails
+): Promise<number> => {
   const block = await provider.getBlock(await provider.getBlockNumber());
   return block.timestamp + Number(bondDetails.maturityDate);
 };
@@ -41,11 +51,13 @@ export const BorrowForm: React.FC = () => {
 
       if (ethereum) {
         // Bonds have a decimal place of 6 so we need to covert. TODO Maybe fetch the decimal place in the future
-        const convertedBondAmount = `${bondDetails.amount * 1000000}`; 
+        const convertedBondAmount =
+          bondDetails.amount * 1000000 * (0.01 * bondDetails.interestRate + 1);
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
 
-        const paymentTokenAddress = PAYMENT_TOKEN_ADDRESSES[bondDetails.paymentToken];
+        const paymentTokenAddress =
+          PAYMENT_TOKEN_ADDRESSES[bondDetails.paymentToken];
         const paymentTokenContract = new ethers.Contract(
           paymentTokenAddress,
           erc20Abi,
@@ -59,7 +71,10 @@ export const BorrowForm: React.FC = () => {
         );
 
         // TODO add check to see if allowance is already done
-        const allowanceERC20Txn = await paymentTokenContract.approve(BOND_FACTORY_ADDRESS, bondDetails.amount);
+        const allowanceERC20Txn = await paymentTokenContract.approve(
+          BOND_FACTORY_ADDRESS,
+          bondDetails.amount
+        );
         // string memory name,
         //       string memory symbol,
         //       uint256 maturity, (NEEDS TO BE IN BLOCK TIMESTAMP)
@@ -77,7 +92,7 @@ export const BorrowForm: React.FC = () => {
           bondDetails.symbol,
           maturityDate,
           paymentTokenAddress,
-          COLLATERAL_TOKEN_ADDRESS, 
+          COLLATERAL_TOKEN_ADDRESS,
           1000000000000,
           0,
           convertedBondAmount,

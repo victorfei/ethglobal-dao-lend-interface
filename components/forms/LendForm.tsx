@@ -6,13 +6,13 @@ import { PAYMENT_TOKEN_ADDRESSES } from "@src/constants/addresses";
 import abis from "@src/abis";
 
 interface LendingDetails {
-  daoName: string,
-  amount: number,
-  paymentToken: PaymentToken,
-  maturityDate: string,
-  interestRate: number,
-  address: string,
-  remainingBorrowAmount: number
+  daoName: string;
+  amount: number;
+  paymentToken: PaymentToken;
+  maturityDate: string;
+  interestRate: number;
+  address: string;
+  remainingBorrowAmount: number;
 }
 export interface LendingFormProps {
   lendDetails: LendingDetails;
@@ -22,9 +22,7 @@ function calculateMaturedValue(amountLend: number) {
   return amountLend;
 }
 
-export const LendForm = ({
-  lendDetails,
-}: LendingFormProps) => {
+export const LendForm = ({ lendDetails }: LendingFormProps) => {
   const [amountLend, setAmountLend] = useState(0);
 
   const bondAbi = abis.bond;
@@ -35,7 +33,7 @@ export const LendForm = ({
       const { ethereum } = window;
       if (ethereum) {
         // Bonds have a decimal place of 6 so we need to covert. TODO Maybe fetch the decimal place in the future
-        const convertedAmountLend = `${amountLend * 1000000}`; 
+        const convertedAmountLend = amountLend * 1000000;
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
 
@@ -50,10 +48,13 @@ export const LendForm = ({
           bondAbi,
           signer
         );
-        
+
         // TODO add check to see if allowance is already done
-        const allowanceERC20Txn = await paymentTokenContract.approve(lendDetails.address, convertedAmountLend);
-        
+        const allowanceERC20Txn = await paymentTokenContract.approve(
+          lendDetails.address,
+          convertedAmountLend
+        );
+
         const createBondTxn = await bondContract.purchaseBond(
           convertedAmountLend,
           {
@@ -78,7 +79,7 @@ export const LendForm = ({
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <div className="w-8/12 border-gray-400 border-2 py-4 pl-4  border-solid shadow-lg ">
