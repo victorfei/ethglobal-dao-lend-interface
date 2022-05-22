@@ -2,13 +2,25 @@ import { useState, useEffect } from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import { LendForm } from "./forms/LendForm";
+import { PaymentToken } from "./forms/common";
 
+export interface LendTableOutput {
+  id: number;
+  addr: string;
+  name: string;
+  maturityDate: string;
+  dao: string;
+}
 export interface lendingTableProps {
   daoName: string;
   borrowAmount: number;
   borrowToken: string;
   borrowMaturity: number;
   borrowInterestRate: number;
+}
+
+export function convertMaturityToUTC(maturity: string) {
+  return new Date(Number(maturity)).toLocaleString();
 }
 
 const client = new ApolloClient({
@@ -25,7 +37,7 @@ const columnDefs: GridColDef[] = [
 ];
 
 export const LendingTable = () => {
-  const [allBonds, setAllBonds] = useState([]);
+  const [allBonds, setAllBonds] = useState<LendTableOutput[]>([]);
   const [selectedBondId, setSelectedBondId] = useState(-1);
   useEffect(() => {
     const fetchData = async () => {
@@ -49,15 +61,14 @@ export const LendingTable = () => {
           `,
         })
         .then((result: any) => {
-          var outputs: any[] = [];
+          var outputs: LendTableOutput[] = [];
+          console.log(result)
           result["data"]["bonds"].forEach((bond: any, idx: number) => {
-            var maturityDate = new Date(0); // The 0 there is the key, which sets the date to the epoch
-            maturityDate.setUTCSeconds(bond["maturity"]);
             outputs.push({
               id: idx,
               addr: bond["id"],
               name: bond["name"],
-              maturityDate: maturityDate,
+              maturityDate: convertMaturityToUTC(bond["maturity"]),
               dao: bond["dao"]["name"],
             });
           });
@@ -82,15 +93,15 @@ export const LendingTable = () => {
       <div>
         {selectedBondId >= 0 && (
           <LendForm
-            bondDetails={{
+            lendDetails={{
               daoName: allBonds[selectedBondId]["dao"],
-              amount: 2000,
-              paymentToken: "USDC",
-              maturityDate:
-                allBonds[selectedBondId]["maturityDate"].toLocaleString(),
+              amount: 0,
+              paymentToken: PaymentToken.USDC,
+              maturityDate: allBonds[selectedBondId]["maturityDate"],
               interestRate: 0.1,
+              remainingBorrowAmount: 10,
+              address: allBonds[selectedBondId]["addr"]
             }}
-            remainingBorrowAmount={10}
           />
         )}
       </div>
