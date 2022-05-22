@@ -5,28 +5,31 @@ import { Button } from "@mui/material";
 
 export interface ConnectWalletProps {
   connectWallet: () => void;
-  connected: boolean;
+  disconnectWallet: () => void;
+
+  web3Provider: boolean;
 }
 
-// docs.walletconnect.com/quick-start/dapps/web3-provider
 const ConnectWalletButton = ({
   connectWallet,
-  connected,
+  disconnectWallet,
+  web3Provider,
 }: ConnectWalletProps) => {
   return (
     <div>
-      {connected ? (
-        <Button
-          variant="contained"
-          className="bg-black text-white rounded-xl hover:bg-black hover:text-white"
-        >
-          {" "}
-          Wallet Connected
-        </Button>
-      ) : (
+      {web3Provider ? (
         <Button
           variant="outlined"
           className="text-black border-black hover:bg-black hover:text-white	 hover:cursor-pointer"
+          onClick={() => disconnectWallet()}
+        >
+          {" "}
+          Disconnect Wallet
+        </Button>
+      ) : (
+        <Button
+          variant="contained"
+          className="bg-black text-white rounded-xl hover:bg-black hover:text-white"
           onClick={() => connectWallet()}
         >
           {" "}
