@@ -21,6 +21,7 @@ export const LendForm = ({
 }: LendingFormProps) => {
   const [amountLend, setAmountLend] = useState(0);
 
+  //Commit Add
   return (
     <div className="w-8/12 border-gray-400 border-2 py-4 pl-4  border-solid shadow-lg ">
       {" "}
