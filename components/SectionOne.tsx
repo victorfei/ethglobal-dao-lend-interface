@@ -16,7 +16,7 @@ export const SectionOne = () => {
       <Container className="py-8">
         <CardContent>
           <Typography variant="h2" color="common.font" className="text-white">
-            UnderCollateralized
+            Undercollateralized
           </Typography>
           <Typography variant="h3">Lending For</Typography>
           <Typography variant="h3">DAO's</Typography>
