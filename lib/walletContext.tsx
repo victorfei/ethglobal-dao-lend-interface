@@ -34,7 +34,7 @@ const providerOptions = {
       chainId: 42,
     },
     package: WalletLink,
-    connector: async (_, options) => {
+    connector: async (_: any, options: any) => {
       const { appName, networkUrl, chainId } = options;
       const walletLink = new WalletLink({
         appName,
@@ -46,7 +46,7 @@ const providerOptions = {
   },
 };
 
-let web3Modal;
+let web3Modal: any;
 if (typeof window !== "undefined") {
   web3Modal = new Web3Modal({
     network: "mainnet", // optional
@@ -85,8 +85,8 @@ type ActionType =
 const initialState: StateType = {
   provider: null,
   web3Provider: null,
-  address: null,
-  chainId: null,
+  address: undefined,
+  chainId: undefined,
 };
 
 function reducer(state: StateType, action: ActionType): StateType {
@@ -116,13 +116,18 @@ function reducer(state: StateType, action: ActionType): StateType {
   }
 }
 
-export const WalletAuthContext = createContext();
+export interface walletProps {
+  connect: () => void;
+  disconnect: () => void;
+  web3Provider: any;
+}
+export const WalletAuthContext = createContext({} as walletProps);
 
 export const useWalletAuth = () => {
   return useContext(WalletAuthContext);
 };
 
-export const WalletAuthProvider = ({ children }) => {
+export const WalletAuthProvider = ({ children }: any) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { provider, web3Provider, address, chainId } = state;
   const [accounts, setAccounts] = useState();

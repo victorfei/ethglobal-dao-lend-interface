@@ -6,13 +6,6 @@ import { Web3Provider } from "@ethersproject/providers";
 import { NavBar } from "@src/components/navbar/NavBar";
 
 export default function Borrow() {
-  const { connectWallet, checkIfWalletIsConnected, currentAccount } =
-    useWalletAuth();
-
-  useEffect(() => {
-    checkIfWalletIsConnected();
-  }, []);
-
   return (
     <div className="flex flex-wrap justify-center ">
       <NavBar />

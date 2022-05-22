@@ -112,7 +112,6 @@ export interface IGasPrice {
   time: number;
   price: number;
 }
-ß;
 
 export interface IGasPrices {
   timestamp: number;

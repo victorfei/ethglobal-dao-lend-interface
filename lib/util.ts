@@ -3,7 +3,21 @@ import { IChainData } from "./types";
 
 export function getChainData(chainId?: number): IChainData {
   if (!chainId) {
-    return null;
+    return {
+      name: "default",
+      short_name: "default",
+      chain: "default",
+      network: "default",
+      chain_id: 1,
+      network_id: 1,
+      rpc_url: "DEFAULT",
+      native_currency: {
+        symbol: "USDC",
+        name: "DEFAULT",
+        decimals: "100000000000000000",
+        contractAddress: "0x",
+      },
+    };
   }
   const chainData = supportedChains.filter(
     (chain: any) => chain.chain_id === chainId
