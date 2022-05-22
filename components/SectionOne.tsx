@@ -28,7 +28,7 @@ export const SectionOne = () => {
           variant="contained"
           className="rounded-full bg-white text-black hover:bg-black hover:cursor-pointer hover:text-white"
           onClick={() => {
-            Router.push("/lend");
+            console.log("move page ref");
           }}
         >
           Invest in a DAO
