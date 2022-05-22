@@ -8,20 +8,16 @@ export const NavBar = () => {
   // ---------------------------
   // Wallet related
   // ---------------------------
-  const { connectWallet, checkIfWalletIsConnected, currentAccount } =
-    useWalletAuth();
-
-  useEffect(() => {
-    checkIfWalletIsConnected();
-  }, []);
+  const { connect, disconnect, web3Provider } = useWalletAuth();
 
   return (
     <Container maxWidth="xl" className=" flex justify-between content-center ">
       <img src="./Logo_BONDFI.jpg" alt="logo" width="180" height="80" />
       <div className="flex py-6">
         <ConnectWallet
-          connectWallet={connectWallet}
-          connected={currentAccount.length > 0}
+          connectWallet={connect}
+          disconnectWallet={disconnect}
+          web3Provider={web3Provider}
         />{" "}
       </div>
     </Container>
