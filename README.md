@@ -1,7 +1,9 @@
-This is the mono-repo for the BondFi project. BondFi is a decenteralized bond issuer that allows bonds to be created by anyone. 
+This is the mono-repo for the BondFi project. BondFi is a decenteralized bond issuer that allows bonds to be created by anyone. Currently, BondFi implements [zero coupon bonds](https://www.investopedia.com/terms/z/zero-couponbond.asp) as the main bond instrument. In future releases, we will allow a variety of bonds. 
 
 ## Contracts
-The main contracts are BondFactory.sol and Bond.sol. The contracts are deployed on Kovan:
+The bond contracts use a factory pattern to create new bonds. Currently, the main contracts are BondFactory.sol and Bond.sol. 
+
+The contract are deployed on Kovan:
 
 BondFactory: [0xeCF51812d699B75EC85C554789B064B994419440](https://kovan.etherscan.io/address/0xecf51812d699b75ec85c554789b064b994419440)
 
