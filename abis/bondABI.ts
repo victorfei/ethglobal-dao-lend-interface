@@ -595,49 +595,68 @@ const bondABI = [
   {
     "inputs": [
       {
-        "internalType": "string",
-        "name": "bondName",
-        "type": "string"
+        "components": [
+          {
+            "internalType": "string",
+            "name": "bondName",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "bondSymbol",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "bondOwner",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "paymentToken",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "collateralToken",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct BondDetail",
+        "name": "bondDetail",
+        "type": "tuple"
       },
       {
-        "internalType": "string",
-        "name": "bondSymbol",
-        "type": "string"
-      },
-      {
-        "internalType": "address",
-        "name": "bondOwner",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_maturity",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "_paymentToken",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_collateralToken",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_collateralRatio",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_convertibleRatio",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "maxSupply",
-        "type": "uint256"
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "maturity",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "collateralRatio",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "convertibleRatio",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "purchaseBonus",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxSupply",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct BondNumericDetail",
+        "name": "bondNumericDetail",
+        "type": "tuple"
       }
     ],
     "name": "initialize",
@@ -835,6 +854,19 @@ const bondABI = [
     "name": "purchaseBond",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "purchaseBonus",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {

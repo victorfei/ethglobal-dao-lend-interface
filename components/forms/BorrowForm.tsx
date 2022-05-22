@@ -52,7 +52,8 @@ export const BorrowForm: React.FC = () => {
       if (ethereum) {
         // Bonds have a decimal place of 6 so we need to covert. TODO Maybe fetch the decimal place in the future
         const convertedBondAmount =
-          bondDetails.amount * 1000000 * (0.01 * bondDetails.interestRate + 1);
+          Math.floor(bondDetails.amount * 1000000 * (0.01 * bondDetails.interestRate + 1));
+          console.log('convertedBondAmount',convertedBondAmount)
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
 
@@ -88,15 +89,18 @@ export const BorrowForm: React.FC = () => {
         const maturityDate = await generateMaturityDate(provider, bondDetails);
         const bondName = generateBondName(bondDetails, maturityDate);
         const createBondTxn = await bondFactoryContract.createBond(
-          bondName,
-          bondDetails.symbol,
-          maturityDate,
-          paymentTokenAddress,
-          COLLATERAL_TOKEN_ADDRESS,
-          1000000000000,
-          0,
-          convertedBondAmount,
-          bondDetails.daoName,
+          {
+            name: bondName,
+            symbol: bondDetails.symbol,
+            maturity: maturityDate,
+            paymentToken: paymentTokenAddress,
+            collateralToken: COLLATERAL_TOKEN_ADDRESS,
+            collateralTokenAmount: 1000000000000,
+            convertibleTokenAmount: 0,
+            bonds: convertedBondAmount,
+            daoName: bondDetails.daoName,
+            interestRate: bondDetails.interestRate,
+          },
           {
             // TODO add gas price calulator to get dynamic prices
             gasPrice: ethers.utils.parseUnits("100", "gwei"),
