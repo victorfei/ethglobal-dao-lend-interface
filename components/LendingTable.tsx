@@ -3,6 +3,8 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import { LendForm } from "./forms/LendForm";
 import { PaymentToken } from "./forms/common";
+import { Button } from "@mui/material";
+import LendingModal from "./LendingModal";
 
 export interface LendTableOutput {
   id: number;
@@ -28,17 +30,47 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const columnDefs: GridColDef[] = [
-  { field: "id", headerName: "ID", flex: 1 },
-  { field: "name", headerName: "Bond Name", flex: 1 },
-  { field: "dao", headerName: "DAO Name", flex: 1 },
-  { field: "maturityDate", headerName: "Maturity Date", flex: 1 },
-  { field: "addr", headerName: "Address", flex: 1 },
-];
-
 export const LendingTable = () => {
   const [allBonds, setAllBonds] = useState<LendTableOutput[]>([]);
   const [selectedBondId, setSelectedBondId] = useState(-1);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [cellValues, setCellValues] = useState({
+    addr: "DEFAULT",
+    name: "DEFAULT",
+    maturityDate: "DEFAULT",
+    dao: "DEFAULT",
+  });
+
+  const columnDefs: GridColDef[] = [
+    { field: "id", headerName: "ID", flex: 0 },
+    { field: "name", headerName: "Bond Name", flex: 1 },
+    { field: "dao", headerName: "DAO Name", flex: 0 },
+    { field: "maturityDate", headerName: "Maturity Date", flex: 0 },
+    { field: "addr", headerName: "Address", flex: 1 },
+    {
+      field: "Lending Details",
+      flex: 0.5,
+      renderCell: (cellValues) => {
+        return (
+          <Button
+            variant="contained"
+            className="bg-gradient-to-r from-green-400 to-blue-500"
+            onClick={(e) => {
+              lendingDetailModal(cellValues.row);
+            }}
+          >
+            Lending Details
+          </Button>
+        );
+      },
+    },
+  ];
+  //button turns modal true, passes cell values
+
+  const lendingDetailModal = (cellValues: any) => {
+    setModalOpen(true);
+    setCellValues(cellValues);
+  };
   useEffect(() => {
     const fetchData = async () => {
       client
@@ -62,7 +94,7 @@ export const LendingTable = () => {
         })
         .then((result: any) => {
           var outputs: LendTableOutput[] = [];
-          console.log(result)
+          console.log(result);
           result["data"]["bonds"].forEach((bond: any, idx: number) => {
             outputs.push({
               id: idx,
@@ -87,24 +119,18 @@ export const LendingTable = () => {
         autoHeight={true}
         onRowClick={(params, events, details) => {
           setSelectedBondId(Number(params["id"]));
-          console.log(selectedBondId);
         }}
       />
-      <div>
-        {selectedBondId >= 0 && (
-          <LendForm
-            lendDetails={{
-              daoName: allBonds[selectedBondId]["dao"],
-              amount: 0,
-              paymentToken: PaymentToken.USDC,
-              maturityDate: allBonds[selectedBondId]["maturityDate"],
-              interestRate: 0.1,
-              remainingBorrowAmount: 10,
-              address: allBonds[selectedBondId]["addr"]
-            }}
-          />
-        )}
-      </div>
+      {cellValues && (
+        <LendingModal
+          open={modalOpen}
+          handleClose={setModalOpen}
+          addr={cellValues.addr}
+          name={cellValues.name}
+          maturityDate={cellValues.maturityDate}
+          dao={cellValues.dao}
+        />
+      )}
     </div>
   );
 };
